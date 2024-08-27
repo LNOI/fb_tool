@@ -4,7 +4,7 @@ import { dataPost } from "@/lib/data/data_post";
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
-    data: dataPost,
+    data: dataPost.slice(0, 30),
     currentPost: {},
     limit: 15,
     start: 0,
