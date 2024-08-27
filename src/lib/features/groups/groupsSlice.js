@@ -1,9 +1,12 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
+
+import { dataGroup } from "@/lib/data/data_group";
+
 export const groupsSlice = createSlice({
   name: "groups",
   initialState: {
-    data: [],
+    data:dataGroup,
     currentGroup: {},
     limit: 15,
     start: 0,

@@ -1,15 +1,16 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import { dataPost } from "@/lib/data/data_post";
 
 export const postsSlice = createSlice({
-  name: "groups",
+  name: "posts",
   initialState: {
-    data: [],
-    currentGroup: {},
+    data: dataPost,
+    currentPost: {},
     limit: 15,
     start: 0,
   },
   reducers: {
-    setLoadGroups: (state, action) => {
+    setLoadPosts: (state, action) => {
       if (action.payload.refresh) {
         state.start = 0;
         state.data = action.payload.data;
@@ -30,6 +31,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { setLoadGroups, setPreviousPage, setNextPage } =
-  groupsSlice.actions;
-export default groupsSlice.reducer;
+export const { setLoadPosts, setPreviousPage, setNextPage } =
+  postsSlice.actions;
+export default postsSlice.reducer;

@@ -64,7 +64,7 @@ const Menu = [
 
 const UserMock = {
     name : "thanhloidev",
-    avatar : "https://avatars.githubusercontent.com/u/74746570?v=4"
+    avatar : "/avatar/user.png"
 }
 
 export default function DashboardLayout({
@@ -73,20 +73,20 @@ export default function DashboardLayout({
     const [openMenu, setOpenMenu] = useState(false);
     return (
       <div className="w-full flex flex-row justify-start">
-        <div className={`${ openMenu ? "flex flex-col" : "hidden" } duration-0  lg:flex lg:flex-col lg:w-64 h-screen bg-red-300`}>
+        <div className={`${ openMenu ? "flex flex-col" : "hidden" } duration-0  lg:flex lg:flex-col lg:w-64 h-screen `}>
             <div className="w-full h-10 relative">
-                <Image src="/logo/logo_facebook.png" width={75} height={75} className="bg-transparent rounded-md m-auto" alt="image"/>
+                <span className="font-bold text-2xl w-full">FBTOOL</span>
                 {
-                   openMenu && <span className="block lg:hidden absolute -right-4 top-0 text-red-600" onClick={()=>setOpenMenu(false)}>X</span>
+                   openMenu && <span className="block lg:hidden absolute -right-4 top-0 " onClick={()=>setOpenMenu(false)}>X</span>
                 }
             </div>
-            <div className="w-full flex-1 flex flex-col pt-4">
+            <div className="w-full flex-1 flex flex-col pt-4 pl-2 lg:pt-8">
                 <div className="flex-1 flex flex-col space-y-2">
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 lg:space-y-4">
                     {
                         Menu.map((item, index)=>
                             <li key={index} className="">
-                                <Link href={item.href || "/"} className="flex flex-row items-center justify-start hover:text-red-600 text-black">
+                                <Link href={item.href || "/"} className="flex flex-row items-center justify-start hover:text-red-600 ">
                                     <span className="">{item.icon}</span>
                                     <span className="">{item.title}</span>
                                 </Link>
@@ -95,7 +95,7 @@ export default function DashboardLayout({
                                     item.subMenu && <>
                                         {
                                             item.subMenuItems.map((subItem, subIndex)=> 
-                                                <li key={subIndex} className="">
+                                                <li key={subIndex} className="pl-4">
                                                     <Link href={subItem.href || "/"} className="flex flex-row items-center justify-start hover:text-red-600">
                                                         <span className="">{subItem.icon}</span>
                                                         <span className="">{subItem.title}</span>
@@ -113,11 +113,16 @@ export default function DashboardLayout({
                     </ul>
                     
                 </div>
-                <div className="h-10">User</div>
+                <div className="h-10">
+                    <div className="flex items-center justify-center">
+                        <Image src={UserMock.avatar} width={30} height={30} className="bg-transparent rounded-md" alt="image"/>
+                        <span className="">{UserMock.name}</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div className="w-full bg-blue-400 flex flex-col">
-            <div className="w-full h-12 bg-orange-400 flex flex-row items-center justify-center">
+        <div className="w-full flex flex-col">
+            <div className="w-full h-12  flex flex-row items-center justify-center">
                 {
                     !openMenu && <RiMenu2Fill className="block lg:hidden" onClick={()=> setOpenMenu(true)}></RiMenu2Fill>                 
                 }
@@ -128,8 +133,8 @@ export default function DashboardLayout({
                     </div>
                 </div>
             </div>
-            <div className="w-full bg-blue-100 flex-1">
-                {/* {children} */}
+            <div className="w-full  flex-1">             
+                {children}
             </div>
         </div>
       </div>

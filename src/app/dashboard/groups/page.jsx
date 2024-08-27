@@ -4,6 +4,7 @@ import TableFacebook from "@/components/table";
 import { Button } from "@headlessui/react";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setLoadGroups } from "@/lib/features/groups/groupsSlice";
+import { CiSearch } from "react-icons/ci";
 import {get} from "@/lib/api";
 export default function page() {
   const [value, setValue] = useState("");
@@ -22,12 +23,13 @@ export default function page() {
         );
     };
     const refreshData = () => { 
-        get(`/user/${user.user_id}/groups/`,{
-            s:0,
-            limit:groups.limit
-        }).then((res)=>{
-            dispatch(setLoadGroups({data:res, refresh:true}));
-        });
+      alert('refresh');  
+      // get(`/user/${user.user_id}/groups/`,{
+        //     s:0,
+        //     limit:groups.limit
+        // }).then((res)=>{
+        //     dispatch(setLoadGroups({data:res, refresh:true}));
+        // });
     };
 
     const onFetchData = () => {
@@ -51,27 +53,21 @@ export default function page() {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="w-full flex flex-col px-10 py-4">
-        <label htmlFor="search_post">Search posts</label>
-        <textarea
+      <div className="w-full flex flex-col py-4 relative pr-4">
+        <input
           name="search post"
           id="search_post"
-          className="border border-black rounded-md"
+          className="border border-black rounded-md py-2 px-2"
           placeholder="Tìm kiếm group"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-        ></textarea>
-        <Button
-          onClick={onBtnClick}
-          className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-        >
-          Find Groups
-        </Button>
+        ></input>
+        <Button  onClick={onBtnClick} className="absolute top-5 right-5"><CiSearch className="cursor-pointer w-8 h-8" /></Button>
+
       </div>
 
       <div className="w-full">
-        <Button onClick={()=>refreshData()}>Refresh</Button>
-        <TableFacebook />
+        <TableFacebook onRefresh={refreshData}/>
       </div>
     </div>
   );
