@@ -94,7 +94,6 @@ export default function table({ onRefresh }) {
               </tr>
             </thead>
             
-            
             <tbody className="divide-y divide-gray-200 ">
               {posts.data?.map((item, index) => {
                 return (
@@ -109,7 +108,6 @@ export default function table({ onRefresh }) {
                             <div className="flex flex-col flex-1">
                             <p className="flex-1">Người đăng: <span>{item.owner_name}</span> </p>
                             <p><span className="decoration-black ">Tiêu đề:</span>  {item.content}</p>
-
                             </div>
                             <p className="w-20 text-center p-1 rounded-sm text-gray-500">{item.date}</p>
                           </div>
