@@ -19,25 +19,9 @@ import { IoClose } from "react-icons/io5";
 
 const Menu = [
     {
-        title : "Lịch sử ",
+        title : "Dữ liệu",
         href : "/dashboard/groups",
         icon : <BsClipboardDataFill/>,  
-    },
-    {
-        title : "Lấy dữ liệu",
-        href : "/dashboard/groups",
-        icon : <FaRobot/>,
-        subMenu : true,
-        subMenuItems : [
-            {
-                title : "Nhóm",
-                href : "/dashboard/groups",
-            },
-            {
-                title : "Bài viết",
-                href : "/dashboard/groups",
-            }
-        ]
     },
     {
         title : "Tự động",
@@ -71,24 +55,27 @@ export default function DashboardLayout({
     children, // will be a page or nested layout
   }) {
     const [openMenu, setOpenMenu] = useState(false);
+    const [currentMenu, setCurrentMenu] = useState(0);
+
+
     return (
       <div className="w-full flex flex-row justify-start">
-        <div className={`${ openMenu ? "flex flex-col" : "hidden" } duration-0  lg:flex lg:flex-col lg:w-64 h-screen `}>
-            <div className="w-full h-10 relative">
-                <span className="font-bold text-2xl w-full">FBTOOL</span>
+        <div className={`${ openMenu ? "flex flex-col" : "hidden" } text-gray-300 bg-gray-950 duration-0  lg:flex lg:flex-col lg:w-64 h-screen `}>
+            <div className="w-full h-14 relative overflow-hidden">
+                <Image src="/logo/marketing_tool.png" width={120} height={0} className="mx-auto -mt-8 overflow-hidden"  alt="image"/>
                 {
                    openMenu && <span className="block lg:hidden absolute -right-4 top-0 " onClick={()=>setOpenMenu(false)}>X</span>
                 }
             </div>
-            <div className="w-full flex-1 flex flex-col pt-4 pl-2 lg:pt-8">
+            <div className="w-full flex-1 flex flex-col pt-4 px-4  lg:pt-8">
                 <div className="flex-1 flex flex-col space-y-2">
                     <ul className="space-y-2 lg:space-y-4">
                     {
                         Menu.map((item, index)=>
-                            <li key={index} className="">
-                                <Link href={item.href || "/"} className="flex flex-row items-center justify-start hover:text-red-600 ">
-                                    <span className="">{item.icon}</span>
-                                    <span className="">{item.title}</span>
+                            <li key={index} className="rounded-md">
+                                <Link href={item.href || "/"} className={`flex flex-row space-x-2 items-center justify-start ${index===currentMenu && "bg-gray-800"} hover:bg-gray-800 focus:bg-gray-800 px-2 py-2 rounded-md`} onClick={()=>setCurrentMenu(index)}>
+                                    <span >{item.icon}</span>
+                                    <span >{item.title}</span>
                                 </Link>
                                 <ul>
                                 {
@@ -108,7 +95,6 @@ export default function DashboardLayout({
                                 </ul>
                             </li>
                             )
-                        
                     }
                     </ul>
                     
@@ -133,7 +119,7 @@ export default function DashboardLayout({
                     </div>
                 </div>
             </div>
-            <div className="w-full  flex-1">             
+            <div className="w-full flex-1">             
                 {children}
             </div>
         </div>

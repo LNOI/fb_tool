@@ -11,17 +11,13 @@ import { useRouter } from "next/navigation";
 import { FiRefreshCcw } from "react-icons/fi";
 import { setProcess } from "@/lib/features/common/commonSlice";
 
-export default function table({ onRefresh }) {
+export default function table({ onRefresh, onGetPosts }) {
   const router = useRouter();
   const groups = useAppSelector((state) => state.groups);
   const posts = useAppSelector((state) => state.posts);
   const dispatch = useAppDispatch();
-  const [currentGroupID, setCurrentGroupID] = React.useState({});
-
-  const onGetPosts = (id) => {
-    setCurrentGroupID(id);
-  };
-
+  const [currentGroupID, setCurrentGroupID] = React.useState(null);
+  
   const onRefereshDataPost = () => {
     var editorExtensionId = "imdkedocinphibhlgmfabcfbpihcopid";
     chrome.runtime.sendMessage(
@@ -55,13 +51,14 @@ export default function table({ onRefresh }) {
                         item.id === currentGroupID && "bg-blue-400"
                       }`}
                       onClick={() => {
+                        setCurrentGroupID(item.id);
                         onGetPosts(item.id);
                       }}
                     >
                     
                       <div className="flex flex-col space-y-1">
                         <div className="flex flex-row">
-                          <p className="flex-1 font-bold">{item.name}</p>
+                          <p className="flex-1 font-bold text-wrap">{item.name}</p>
                           <p
                             className={`w-20 text-center p-1 rounded-sm text-white font-bold ${
                               item.privacy === "Private"
@@ -108,7 +105,7 @@ export default function table({ onRefresh }) {
       </div>
 
       {/* Table right */}
-      <div className="md:w-1/3  ">
+      <div className="md:w-1/3">
         <div className="overflow-auto max-h-[95%] rounded-t-lg">
           <FiRefreshCcw onClick={onRefereshDataPost}></FiRefreshCcw>
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
@@ -135,7 +132,7 @@ export default function table({ onRefresh }) {
                               <span className="decoration-black ">
                                 Tiêu đề:
                               </span>{" "}
-                              {item.content}
+                              {item.title}
                             </p>
                           </div>
                           <p className="w-20 text-center p-1 rounded-sm text-gray-500">
@@ -154,7 +151,7 @@ export default function table({ onRefresh }) {
                             Số tương tác {item.reaction}
                           </p>
                           <Link
-                            href={`/dashboard/groups/${item.id}`}
+                            href={`/dashboard/posts?group_id=${currentGroupID}&post_id=${item.id}`}
                             className="text-center p-1 bg-rose-400 text-white"
                           >
                             Comments

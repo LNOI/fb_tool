@@ -4,7 +4,7 @@ import { dataPost } from "@/lib/data/data_post";
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
-    data: dataPost.slice(0, 30),
+    data: [],
     currentPost: {},
     limit: 15,
     start: 0,
@@ -22,6 +22,9 @@ export const postsSlice = createSlice({
         state.data = [...state.data, ...action.payload.data];
       }
     },
+    setCurrentPost: (state, action) => {
+      state.currentPost = action.payload.data;
+    },
     setPreviousPage: (state) => {
       state.start = state.start - state.limit;
     },
@@ -31,6 +34,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { setLoadPosts, setPreviousPage, setNextPage } =
+export const { setLoadPosts, setPreviousPage, setNextPage,setCurrentPost } =
   postsSlice.actions;
 export default postsSlice.reducer;

@@ -4,6 +4,7 @@ import TableFacebook from "@/components/table";
 import { Button } from "@headlessui/react";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setLoadGroups } from "@/lib/features/groups/groupsSlice";
+import { setLoadPosts } from "@/lib/features/posts/postsSlice";
 import { CiSearch } from "react-icons/ci";
 import {get} from "@/lib/api";
 export default function page() {
@@ -40,6 +41,17 @@ export default function page() {
             dispatch(setLoadGroups({data:res, start:groups.start}));
         });
     };
+
+    const onGetPosts = (id) => {
+        get(`/user/${user.user_id}/groups/${id}/posts/`,{
+            s:0,
+            limit:20
+        }).then((res)=>{
+            dispatch(setLoadPosts({data:res, refresh:true}));
+        });
+        
+    }
+
     useEffect(() => {
         if(user.user_id){
             if(groups.data.slice(groups.start, groups.start + groups.limit).length === 0) {
@@ -65,7 +77,7 @@ export default function page() {
       </div>
 
       <div className="w-full">
-        <TableFacebook onRefresh={refreshData}/>
+        <TableFacebook onRefresh={refreshData} onGetPosts={onGetPosts}/>
       </div>
     </div>
   );
