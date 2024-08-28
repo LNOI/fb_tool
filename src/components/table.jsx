@@ -31,7 +31,7 @@ export default function table({ onRefresh, onGetPosts }) {
   return (
     <div className="flex h-[calc(100vh-10rem)]">
       {/* Table left */}
-      <div className="rounded-lg border border-gray-200 md:w-2/3 h-full">
+      <div className="rounded-lg border border-gray-200 w-full md:w-2/4 h-full">
         <div className="overflow-auto max-h-[100%] rounded-t-lg">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="text-left sticky top-0 z-50 inset-x-0 bg-gray shadow-sm saturate-100 backdrop-blur-[1px]">
@@ -105,7 +105,7 @@ export default function table({ onRefresh, onGetPosts }) {
       </div>
 
       {/* Table right */}
-      <div className="md:w-1/3">
+      <div className="w-full md:w-2/4">
         <div className="overflow-auto max-h-[95%] rounded-t-lg">
           <FiRefreshCcw onClick={onRefereshDataPost}></FiRefreshCcw>
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">

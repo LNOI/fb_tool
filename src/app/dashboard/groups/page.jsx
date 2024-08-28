@@ -63,8 +63,8 @@ export default function page() {
     ]);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <div className="w-full flex flex-col py-4 relative pr-4">
+    <div className="w-full flex flex-col">
+      <div className="w-full max-w-2xl flex flex-col py-4 relative px-4">
         <input
           name="search post"
           id="search_post"
@@ -73,7 +73,7 @@ export default function page() {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         ></input>
-        <Button  onClick={onBtnClick} className="absolute top-5 right-5"><CiSearch className="cursor-pointer w-8 h-8" /></Button>
+        <Button onClick={onBtnClick} className="absolute top-5 right-5"><CiSearch className="cursor-pointer w-8 h-8" /></Button>
       </div>
 
       <div className="w-full">

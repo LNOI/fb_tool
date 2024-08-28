@@ -77,12 +77,12 @@ export default function DashboardLayout({
                                     <span >{item.icon}</span>
                                     <span >{item.title}</span>
                                 </Link>
-                                <ul>
+                                <ul className="pl-4">
                                 {
                                     item.subMenu && <>
                                         {
                                             item.subMenuItems.map((subItem, subIndex)=> 
-                                                <li key={subIndex} className="pl-4">
+                                                <li key={subIndex} className="pl-4 mt-2">
                                                     <Link href={subItem.href || "/"} className="flex flex-row items-center justify-start hover:text-red-600">
                                                         <span className="">{subItem.icon}</span>
                                                         <span className="">{subItem.title}</span>
@@ -108,7 +108,7 @@ export default function DashboardLayout({
             </div>
         </div>
         <div className="w-full flex flex-col">
-            <div className="w-full h-12  flex flex-row items-center justify-center">
+            {/* <div className="w-full h-12  flex flex-row items-center justify-center">
                 {
                     !openMenu && <RiMenu2Fill className="block lg:hidden" onClick={()=> setOpenMenu(true)}></RiMenu2Fill>                 
                 }
@@ -118,7 +118,7 @@ export default function DashboardLayout({
                         <input type="text" className="w-full pl-6 rounded-xl" placeholder="Search history"/>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="w-full flex-1">             
                 {children}
             </div>
