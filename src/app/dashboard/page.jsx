@@ -3,11 +3,10 @@ import React, { useState } from "react";
 
 export default function page() {
   const [value, setValue] = useState("");
-
+  
   const onBtnClick = () => {
     // The ID of the extension we want to talk to.
     var editorExtensionId = "imdkedocinphibhlgmfabcfbpihcopid";
-    // console.log(chrome);
     chrome.runtime.sendMessage(
       editorExtensionId,
       { message: value },

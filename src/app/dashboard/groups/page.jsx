@@ -23,13 +23,13 @@ export default function page() {
         );
     };
     const refreshData = () => { 
-      alert('refresh');  
-      // get(`/user/${user.user_id}/groups/`,{
-        //     s:0,
-        //     limit:groups.limit
-        // }).then((res)=>{
-        //     dispatch(setLoadGroups({data:res, refresh:true}));
-        // });
+      // alert('refresh');  
+      get(`/user/${user.user_id}/groups/`,{
+            s:0,
+            limit:groups.limit
+        }).then((res)=>{
+            dispatch(setLoadGroups({data:res, refresh:true}));
+        });
     };
 
     const onFetchData = () => {
@@ -41,7 +41,6 @@ export default function page() {
         });
     };
     useEffect(() => {
-        console.log(groups.start);
         if(user.user_id){
             if(groups.data.slice(groups.start, groups.start + groups.limit).length === 0) {
                 onFetchData();
@@ -63,7 +62,6 @@ export default function page() {
           onChange={(e) => setValue(e.target.value)}
         ></input>
         <Button  onClick={onBtnClick} className="absolute top-5 right-5"><CiSearch className="cursor-pointer w-8 h-8" /></Button>
-
       </div>
 
       <div className="w-full">

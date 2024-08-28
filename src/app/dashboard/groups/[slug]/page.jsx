@@ -16,7 +16,6 @@ export default function group({ params }) {
         const group = groups.data.filter((gp) => gp.id === params.slug)[0];
         var editorExtensionId = "imdkedocinphibhlgmfabcfbpihcopid";
         if (group) {
-            
           chrome.runtime.sendMessage(
             editorExtensionId,
             { type: "posts", link_group: group.link },
