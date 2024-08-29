@@ -34,7 +34,7 @@ export default function table({ onRefresh, onGetPosts }) {
       <div className="rounded-lg border border-gray-200 w-full md:w-2/4 h-full">
         <div className="overflow-auto max-h-[100%] rounded-t-lg">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-            <thead className="text-left sticky top-0 z-50 inset-x-0 bg-gray shadow-sm saturate-100 backdrop-blur-[1px]">
+            <thead className="text-left sticky top-0 z-40 inset-x-0 bg-gray shadow-sm saturate-100 backdrop-blur-[1px]">
               <tr>
                 <th className="whitespace-nowrap  px-4 py-2 font-medium text-gray-900">
                   Groups

@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html {height:100%;}
+
+
 
 html,body {
   scrollbar-width: none; /* For Firefox */
@@ -11,4 +12,9 @@ html,body {
 
 body::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }

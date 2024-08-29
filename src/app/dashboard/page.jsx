@@ -18,15 +18,7 @@ export default function page() {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <input
-        type="text"
-        className="text-black"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      ></input>
-      <button className="bg-orange-600" onClick={onBtnClick}>
-        Search to www3
-      </button>
+      Information at here.
     </div>
   );
 }

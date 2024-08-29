@@ -1,22 +1,13 @@
 'use client'
 import { useState } from "react";
-import { FaAngleLeft } from "react-icons/fa";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { FaAngleDown } from "react-icons/fa6";
-import { FcButtingIn } from "react-icons/fc";
-import { FaHistory } from "react-icons/fa";
-import Image from "next/image";
-import Link from "next/link";
-import { FaSquareFacebook } from "react-icons/fa6";
 import { FaRobot } from "react-icons/fa";
 import { BsClipboardDataFill } from "react-icons/bs";
-import { MdOutlineGroups } from "react-icons/md"; 
-import { GiPostStamp } from "react-icons/gi";
-import { FaCommentAlt } from "react-icons/fa";
-import { RiMenu2Fill } from "react-icons/ri";
-import { FaSearch } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
-
+import Link from "next/link";
+import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleUp } from "react-icons/fa6";
+import { CiSearch } from "react-icons/ci";
+import { FaAlignLeft } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa";
 const Menu = [
     {
         title : "Dữ liệu",
@@ -45,10 +36,21 @@ const Menu = [
     }
 
 ]
-
 const UserMock = {
     name : "thanhloidev",
     avatar : "/avatar/user.png"
+}
+
+const getReactions = (str) =>{
+    const regex = /Tất cả cảm xúc:\s*(\d+)/;
+
+    const match = str.match(regex);
+
+    if (match) {
+        return  parseInt(match[1], 10),        
+    } else {
+        return 0;
+    }
 }
 
 export default function DashboardLayout({
@@ -56,69 +58,61 @@ export default function DashboardLayout({
   }) {
     const [openMenu, setOpenMenu] = useState(false);
     const [currentMenu, setCurrentMenu] = useState(0);
-
-
+    const [menuMobile, setMenuMobile] = useState(false);
     return (
-      <div className="w-full flex flex-row justify-start">
-        <div className={`${ openMenu ? "flex flex-col" : "hidden" } text-gray-300 bg-gray-950 duration-0  lg:flex lg:flex-col lg:w-64 h-screen `}>
-            <div className="w-full h-14 relative overflow-hidden">
-                <Image src="/logo/marketing_tool.png" width={120} height={0} className="mx-auto -mt-8 overflow-hidden"  alt="image"/>
-                {
-                   openMenu && <span className="block lg:hidden absolute -right-4 top-0 " onClick={()=>setOpenMenu(false)}>X</span>
-                }
-            </div>
-            <div className="w-full flex-1 flex flex-col pt-4 px-4  lg:pt-8">
-                <div className="flex-1 flex flex-col space-y-2">
-                    <ul className="space-y-2 lg:space-y-4">
-                    {
-                        Menu.map((item, index)=>
-                            <li key={index} className="rounded-md">
-                                <Link href={item.href || "/"} className={`flex flex-row space-x-2 items-center justify-start ${index===currentMenu && "bg-gray-800"} hover:bg-gray-800 focus:bg-gray-800 px-2 py-2 rounded-md`} onClick={()=>setCurrentMenu(index)}>
-                                    <span >{item.icon}</span>
-                                    <span >{item.title}</span>
-                                </Link>
-                                <ul className="pl-4">
+      <div className="flex h-screen overflow-hidden">
+        <aside className={`text-bodydark absolute left-0 top-0 z-50 flex h-screen w-72 bg-black flex-col overflow-y-hidden duration-300 ease-linear dark:bg-black lg:static lg:translate-x-0 -translate-x-full ${menuMobile && "translate-x-0"}`}>
+                <div className="flex items-center justify-between gap-2 px-6 py-5 lg:py-7">
+                    <Link href="/dashboard"  className="m-auto font-bold " >MARKETING TOOL</Link>
+                    <FaChevronLeft className="block lg:hidden" onClick={()=> setMenuMobile(false)}></FaChevronLeft>
+                </div>
+                <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+                    <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
+                        <div>
+                            <h3 class="mb-4 ml-4 text-sm font-semibold text-bodydark2">MENU</h3>
+                            <ul className="mb-6 flex flex-col gap-2 px-4 space-y-2"> 
                                 {
-                                    item.subMenu && <>
-                                        {
-                                            item.subMenuItems.map((subItem, subIndex)=> 
-                                                <li key={subIndex} className="pl-4 mt-2">
-                                                    <Link href={subItem.href || "/"} className="flex flex-row items-center justify-start hover:text-red-600">
-                                                        <span className="">{subItem.icon}</span>
-                                                        <span className="">{subItem.title}</span>
-                                                    </Link>
-                                                </li>
-                                            )
-                                        }
-                                    </>
+                                    Menu.map((item, index)=>{
+                                        return <li key={index}>
+                                            <div className={`py-2 flex flex-row rounded-sm px-3 justify-center ${index===currentMenu && "bg-gray-700 "}`} onClick={()=>setCurrentMenu(index)}>
+                                                <Link href={item.href} className="flex flex-row gap-2 justify-start items-center flex-1">                                                
+                                                        {item.icon}
+                                                        <span>{item.title}</span>
+                                                </Link>
+                                                { item.subMenu && <div onClick={()=>setOpenMenu(!openMenu)}>{openMenu ? <FaAngleUp></FaAngleUp>:<FaAngleDown/> }</div>}
+                                            </div>
+                                            {
+                                                item.subMenu && currentMenu === index && openMenu && <ul className="flex flex-col gap-1 px-6">
+                                                    {
+                                                        item.subMenuItems.map((subItem, subIndex)=>{
+                                                            return <li key={subIndex}>
+                                                                <Link href={subItem.href} className="flex flex-row gap-2 justify-start items-center">                                                
+                                                                    {subItem.icon}
+                                                                    <span>{subItem.title}</span>
+                                                                </Link>
+                                                            </li>
+                                                        })
+                                                    }
+                                                </ul>
+                                            }
+                                        </li>
+                                    })
                                 }
-                                </ul>
-                            </li>
-                            )
-                    }
-                    </ul>
-                    
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
-                <div className="h-10">
-                    <div className="flex items-center justify-center">
-                        <Image src={UserMock.avatar} width={30} height={30} className="bg-transparent rounded-md" alt="image"/>
-                        <span className="">{UserMock.name}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </aside>
         <div className="w-full flex flex-col">
-            {/* <div className="w-full h-12  flex flex-row items-center justify-center">
-                {
-                    !openMenu && <RiMenu2Fill className="block lg:hidden" onClick={()=> setOpenMenu(true)}></RiMenu2Fill>                 
-                }
+            <div className="w-full h-12  flex flex-row items-center justify-center space-x-2 px-2">
+                <FaAlignLeft className="block lg:hidden" onClick={()=> setMenuMobile(true)}></FaAlignLeft>     
                 <div className="flex-1">
                     <div className="flex flex-row relative w-full px-4">
-                        <FaSearch className="absolute left-5 top-1"/>
+                        <CiSearch className="absolute left-5 top-1"/>
                         <input type="text" className="w-full pl-6 rounded-xl" placeholder="Search history"/>
                     </div>
                 </div>
-            </div> */}
+            </div>
             <div className="w-full flex-1">             
                 {children}
             </div>
