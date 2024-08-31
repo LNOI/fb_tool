@@ -41,17 +41,6 @@ const UserMock = {
     avatar : "/avatar/user.png"
 }
 
-const getReactions = (str) =>{
-    const regex = /Tất cả cảm xúc:\s*(\d+)/;
-
-    const match = str.match(regex);
-
-    if (match) {
-        return  parseInt(match[1], 10),        
-    } else {
-        return 0;
-    }
-}
 
 export default function DashboardLayout({
     children, // will be a page or nested layout

@@ -11,18 +11,26 @@ import { useRouter } from "next/navigation";
 import { FiRefreshCcw } from "react-icons/fi";
 import { setProcess } from "@/lib/features/common/commonSlice";
 
+
 export default function table({ onRefresh, onGetPosts }) {
   const router = useRouter();
   const groups = useAppSelector((state) => state.groups);
   const posts = useAppSelector((state) => state.posts);
+  const user = useAppSelector((state)=>state.user);
   const dispatch = useAppDispatch();
   const [currentGroupID, setCurrentGroupID] = React.useState(null);
   
   const onRefereshDataPost = () => {
     var editorExtensionId = "imdkedocinphibhlgmfabcfbpihcopid";
+    
     chrome.runtime.sendMessage(
       editorExtensionId,
-      { type: "posts", link_group: groups.data.filter((gp) => gp.id === currentGroupID)[0].link },
+      { type: "posts", link_group: groups.data.filter((gp) => gp.id === currentGroupID)[0].link,
+        MAX_POSTS: 1, 
+        MAX_COMMENTS: 3,
+        user_id : user.user_id,
+        group_id: currentGroupID
+       },
       function (response) {
         console.log(response);
       }
@@ -107,7 +115,7 @@ export default function table({ onRefresh, onGetPosts }) {
       {/* Table right */}
       <div className="w-full md:w-2/4">
         <div className="overflow-auto max-h-[95%] rounded-t-lg">
-          <FiRefreshCcw onClick={onRefereshDataPost}></FiRefreshCcw>
+          {currentGroupID && <FiRefreshCcw onClick={onRefereshDataPost}></FiRefreshCcw>}
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
             <thead className="text-left  sticky top-0 z-50 inset-x-0 bg-gray shadow-sm saturate-100 backdrop-blur-[1px]">
               <tr>
@@ -136,12 +144,12 @@ export default function table({ onRefresh, onGetPosts }) {
                             </p>
                           </div>
                           <p className="w-20 text-center p-1 rounded-sm text-gray-500">
-                            {item.date}
+                            {item.post_date}
                           </p>
                         </div>
                         <div className="flex flex-row space-x-1">
                           <Link
-                            href={item.link}
+                            href={item.link_post}
                             target="_blank"
                             className="p-1"
                           >

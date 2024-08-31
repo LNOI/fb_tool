@@ -17,7 +17,7 @@ export default function page() {
         var editorExtensionId = "imdkedocinphibhlgmfabcfbpihcopid";
         chrome.runtime.sendMessage(
         editorExtensionId,
-        { type: "groups", keyword: value },
+        { type: "groups", keyword: value, MAX_GROUPS: 10, user_id: user.user_id },
         function (response) {
             console.log(response);
         }
