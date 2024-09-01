@@ -69,13 +69,14 @@ export default function page() {
           name="search post"
           id="search_post"
           className="border border-black rounded-md py-2 px-2"
-          placeholder="Tìm kiếm group"
+          placeholder="Tìm kiếm nhóm trên facebook"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         ></input>
+        {/* <input className="p-2 border border-gray-200 rounded-md" type="number" placeholder="Thời gian khởi động trước khi vào page cào dữ liêu 1000~1s" /> */}
         <Button onClick={onBtnClick} className="absolute top-5 right-5"><CiSearch className="cursor-pointer w-8 h-8" /></Button>
+        
       </div>
-
       <div className="w-full">
         <TableFacebook onRefresh={refreshData} onGetPosts={onGetPosts}/>
       </div>

@@ -30,7 +30,7 @@ export default function page() {
 
   return (
     <div className="w-full h-[calc(100vh-5rem)] flex flex-col space-y-4">
-      <div className="w-full m-w-[465px] h-56 flex flex-row divide-x-2 divide-gray-200 ">
+      <div className="w-full m-w-[465px] h-56 flex flex-row divide-x-2 divide-gray-200 overflow-auto ">
         <div className="flex flex-col h-full flex-1">
         <Image
           src="/avatar/user.png"
@@ -42,9 +42,15 @@ export default function page() {
         <div className="flex flex-col ml-2">
           <p className="text-white font-bold text-lg">
             {currentPost?.post?.owner_name}
-          </p>
+          </p>  
         </div>
-        <div>{currentPost?.post?.title}</div>
+        <Link target="_blank" href={currentPost?.post?.link_post || '#'}>Truy cập bài viết</Link>
+        <div className="whitespace-pre">{currentPost?.post?.title}</div>
+        <div className="flex items-center justify-center">
+          {currentPost?.post?.link_images && currentPost?.post?.link_images.slice(1, currentPost?.post?.link_images.length - 1).split(",").map((item, index) => {
+            return <Image key={index} src={item} width={225} height={225}></Image>;
+          })}
+        </div>
         </div>
         <div className="flex flex-col h-full lg:w-64 pl-2">
         <div>Số tương tác:{currentPost?.post?.reaction}</div>
@@ -57,7 +63,7 @@ export default function page() {
         <div className="overflow-auto  rounded-t-lg">
           <table className="min-w-full divide-y-2 bg-white text-sm">
             <thead className="text-left sticky top-0 z-50 inset-x-0 bg-gray shadow-sm saturate-100 backdrop-blur-[1px]">
-              <tr>
+              <tr >
                 <th className="whitespace-nowrap px-1 py-2 font-medium w-8">
                   Người gửi
                 </th>
@@ -78,8 +84,8 @@ export default function page() {
             <tbody className="divide-y divide-gray-200">
               {currentPost?.comments?.map((item, index) => {
                 return (
-                  <tr key={index}>
-                    <td className="whitespace-nowrap px-1 py-2 font-medium w-8 flex flex-row  items-center">
+                  <tr key={index} >
+                    <td className="whitespace-nowrap px-1 py-2 font-medium w-24 flex flex-row overflow-scroll  items-center">
                       <Image
                         src="/avatar/user.png"
                         className="rounded-full"
@@ -87,31 +93,28 @@ export default function page() {
                         height={25}
                         alt="oke"
                       ></Image>
-                      <Link href={item.sender_link}> {item.sender_name}</Link>
+                      <Link target="_blank" href={`https://wwww.facebook.com/${item.sender_link}`}> {item.sender_name}</Link>
                     </td>
-                    <td className={`whitespace-nowrap px-4 py-2 font-medium text-gray-900`}>
+                    <td className={`text-wrap px-4 py-2 font-medium text-gray-900 overflow-scroll`}>
                       <div className="flex flex-col space-y-1">
-                        <div className="flex flex-row">
-                          <p className="flex-1 font-bold text-wrap">{item.owner_name}</p>
-                        </div>
-                        <div>{item.content}</div>
+                        <div className="">{item.content}</div>
                       </div>
                     </td>
-                    <td className={`whitespace-nowrap px-4 py-2 font-medium text-gray-900`}>
+                    <td className={`whitespace-nowrap px-4 py-2  w-8 font-medium text-gray-900`}>
                       <div className="flex flex-col space-y-1">
                         <div className="flex flex-row">
                           <p className="flex-1 font-bold text-wrap">Người bán</p>
                         </div>
                       </div>
                     </td>
-                    <td className={`whitespace-nowrap px-4 py-2 font-medium text-gray-900`}>
+                    <td className={`whitespace-nowrap px-4 py-2 w-8 font-medium text-gray-900`}>
                       <div className="flex flex-col space-y-1">
                         <div className="flex flex-row">
                           <p className="flex-1 font-bold text-wrap">Template</p>
                         </div>
                       </div>
                     </td>
-                    <td className={`whitespace-nowrap px-4 py-2 font-medium text-gray-900`}>
+                    <td className={`whitespace-nowrap px-4 w-8 py-2 font-medium text-gray-900`}>
                       <div className="flex flex-col space-y-1">
                         <div className="flex flex-row">
                           <Button className="bg-green-500 text-white p-2 rounded-sm">Gửi tin nhắn</Button>
